@@ -1,26 +1,134 @@
 @import "tailwindcss";
 
+/* globals.css */
+
+/* Definición de las variables para colores */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Colores para modo oscuro */
+  --background-dark: #171717;
+  --foreground-dark: #ededed;
+  --accent-dark: #ff004d;
+  --button-dark: #ff004d;
+
+  /* Colores para modo claro */
+  --background-light: #f4f4f4;
+  --foreground-light: #111111; /* Color de texto para modo claro */
+  --accent-light: #d10040;
+  --button-light: #d10040;
+
+  /* Colores de texto en ambos modos */
+  --text-dark: #ededed; /* Texto en modo oscuro */
+  --text-light: #111111; /* Texto en modo claro */
+  --text-link-dark: #ff004d; /* Enlaces en modo oscuro */
+  --text-link-light: #d10040; /* Enlaces en modo claro */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Estilos generales del body */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--background-dark);
+  color: var(--foreground-dark);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Modo claro */
+body.light {
+  background-color: var(--background-light);
+  color: var(--foreground-light);
+}
+
+/* Header */
+header {
+  background-color: var(--background-dark);
+  border-bottom: 2px solid var(--accent-dark);
+}
+
+body.light header {
+  background-color: var(--background-light);
+  border-bottom: 2px solid var(--accent-light);
+}
+
+/* Botones */
+button {
+  background-color: var(--button-dark);
+  color: #fff;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.light button {
+  background-color: var(--button-light);
+  color: #fff;
+}
+
+/* Enlaces */
+a {
+  color: var(--text-link-dark);
+  transition: color 0.3s ease;
+}
+
+body.light a {
+  color: var(--text-link-light);
+}
+
+a:hover {
+  color: var(--accent-dark);
+}
+
+body.light a:hover {
+  color: var(--accent-light);
+}
+
+/* Títulos y textos */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  transition: color 0.3s ease;
+}
+
+body.light h1,
+body.light h2,
+body.light h3,
+body.light h4,
+body.light h5,
+body.light h6,
+body.light p {
+  color: var(--text-light); /* Colores del texto en modo claro */
+}
+
+body h1,
+body h2,
+body h3,
+body h4,
+body h5,
+body h6,
+body p {
+  color: var(--text-dark); /* Colores del texto en modo oscuro */
+}
+
+/* Estilos adicionales */
+body.light button:hover {
+  background-color: var(--button-light);
+}
+
+body h1,
+body h2,
+body h3,
+body h4,
+body h5,
+body h6,
+body p {
+  color: var(--text-dark); /* Color de texto en modo oscuro */
+}
+
+body.light h1,
+body.light h2,
+body.light h3,
+body.light h4,
+body.light h5,
+body.light h6,
+body.light p {
+  color: var(--text-light); /* Color de texto en modo claro */
 }
