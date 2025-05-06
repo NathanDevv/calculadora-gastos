@@ -1,19 +1,47 @@
 "use client";
 import { useContext } from "react";
-import { generateRandomExpenses } from "@/utils/generators";
 import { ExpenseContext } from "@/context/ExpenseContext";
+import { generateRandomExpenses } from "@/utils/generators";
+import * as XLSX from "xlsx";
 
 export default function SimulationControls() {
-  const { addMultipleExpenses } = useContext(ExpenseContext);
+  const { addMultipleExpenses, expenses, clearExpenses } =
+    useContext(ExpenseContext);
 
   const handleSimulate = () => {
-    const fakeData = generateRandomExpenses(5); // puedes variar el número
+    const fakeData = generateRandomExpenses(5);
     addMultipleExpenses(fakeData);
   };
 
+  const handleExportExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(expenses);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Gastos");
+    XLSX.writeFile(workbook, "gastos.xlsx");
+  };
+
   return (
-    <button className="btn-secondary" onClick={handleSimulate}>
-      Simular Gastos Aleatorios
-    </button>
+    <div className="w-full max-w-md mx-auto mt-6 space-x-3 flex justify-between">
+      <button
+        className="w-1/3 bg-[#FF004D] text-white py-2 px-4 rounded-lg font-semibold hover:bg-[#5a3241] transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer"
+        onClick={handleSimulate}
+      >
+        Simular Gastos Aleatorios
+      </button>
+
+      <button
+        className="w-1/3 bg-green-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-green-700 transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer"
+        onClick={handleExportExcel}
+      >
+        Exportar a Excel
+      </button>
+
+      <button
+        className="w-1/3 bg-zinc-700 text-white py-2 px-4 rounded-lg font-semibold hover:bg-red-600 transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer"
+        onClick={clearExpenses}
+      >
+        Eliminar todos los gastos
+      </button>
+    </div>
   );
 }

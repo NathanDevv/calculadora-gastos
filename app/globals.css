@@ -47,18 +47,6 @@ body.light header {
   border-bottom: 2px solid var(--accent-light);
 }
 
-/* Botones */
-button {
-  background-color: var(--button-dark);
-  color: #fff;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-body.light button {
-  background-color: var(--button-light);
-  color: #fff;
-}
-
 /* Enlaces */
 a {
   color: var(--text-link-dark);

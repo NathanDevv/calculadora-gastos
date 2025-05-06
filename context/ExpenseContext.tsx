@@ -7,12 +7,14 @@ type ExpenseContextType = {
   expenses: Expense[];
   addExpense: (e: Omit<Expense, "id">) => void;
   addMultipleExpenses: (data: Expense[]) => void;
+  clearExpenses: () => void;
 };
 
 export const ExpenseContext = createContext<ExpenseContextType>({
   expenses: [],
   addExpense: () => {},
   addMultipleExpenses: () => {},
+  clearExpenses: () => {},
 });
 
 export const ExpenseProvider = ({
@@ -38,9 +40,13 @@ export const ExpenseProvider = ({
     setExpenses((prev) => [...prev, ...data]);
   };
 
+  const clearExpenses = () => {
+    setExpenses([]);
+  };
+
   return (
     <ExpenseContext.Provider
-      value={{ expenses, addExpense, addMultipleExpenses }}
+      value={{ expenses, addExpense, addMultipleExpenses, clearExpenses }}
     >
       {children}
     </ExpenseContext.Provider>

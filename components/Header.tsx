@@ -56,7 +56,7 @@ export default function Header() {
             </a>
           ))}
           <button
-            className="ml-4 p-2 rounded-full text-gray-300 hover:text-yellow-400 transition"
+            className="bg-[#FF004D] ml-4 p-2 rounded-full text-gray-300 hover:text-yellow-400 transition"
             onClick={toggleTheme}
             aria-label="Toggle Theme"
           >

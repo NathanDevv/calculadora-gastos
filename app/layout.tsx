@@ -1,3 +1,4 @@
+import { ExpenseProvider } from "@/context/ExpenseContext";
 import "./globals.css";
 
 export const metadata = {
@@ -13,7 +14,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className="bg-black text-white min-h-screen font-sans">
-        {children}
+        <ExpenseProvider>{children}</ExpenseProvider>
       </body>
     </html>
   );
