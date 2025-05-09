@@ -25,15 +25,19 @@ export const ExpenseProvider = ({
   const [expenses, setExpenses] = useState<Expense[]>([]);
 
   useEffect(() => {
-    setExpenses(loadExpenses());
+    const loadedExpenses = loadExpenses(); // cargar los gastos del localStorage
+    if (loadedExpenses) {
+      setExpenses(loadedExpenses);
+    }
   }, []);
 
   useEffect(() => {
-    saveExpenses(expenses);
+    saveExpenses(expenses); // guardar los gastos cuando cambian
   }, [expenses]);
 
   const addExpense = (e: Omit<Expense, "id">) => {
-    setExpenses((prev) => [...prev, { ...e, id: crypto.randomUUID() }]);
+    const newExpense = { ...e, id: crypto.randomUUID() };
+    setExpenses((prev) => [...prev, newExpense]);
   };
 
   const addMultipleExpenses = (data: Expense[]) => {
@@ -41,7 +45,8 @@ export const ExpenseProvider = ({
   };
 
   const clearExpenses = () => {
-    setExpenses([]);
+    setExpenses([]); // Limpiar el estado y el localStorage
+    saveExpenses([]); // Asegúrate de limpiar el localStorage
   };
 
   return (
