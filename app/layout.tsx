@@ -1,7 +1,10 @@
 // app/layout.tsx
 import "./globals.css";
 import { ExpenseProvider } from "@/context/ExpenseContext";
-import { metadata } from "@/app/metadata"; // Importamos metadata desde su archivo
+import { metadata } from "@/app/metadata";
+import Header from "@/components/Header";
+
+export const metadataConfig = metadata;
 
 export default function RootLayout({
   children,
@@ -9,20 +12,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
-      {/* El metadata se incluye aquí */}
-      <head>
-        <meta name="description" content={metadata.description} />
-        <title>{metadata.title}</title>
-      </head>
-
-      <html lang="es">
-        <body>
-          <ExpenseProvider>
-            <div className="min-h-screen">{children}</div>
-          </ExpenseProvider>
-        </body>
-      </html>
-    </>
+    <html lang="es">
+      <body className="bg-white dark:bg-zinc-950 text-gray-900 dark:text-white">
+        <ExpenseProvider>
+          <Header />
+          <main className="max-w-3xl mx-auto px-4 py-6 space-y-6">
+            {children}
+          </main>
+        </ExpenseProvider>
+      </body>
+    </html>
   );
 }

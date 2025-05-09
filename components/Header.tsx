@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Menu, X, Sun, Moon } from "lucide-react";
+import Link from "next/link"; // Importar Link de Next.js
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,31 +33,30 @@ export default function Header() {
   }, []);
 
   const navItems = [
-    "Inicio",
-    "Agregar Gasto",
-    "Lista",
-    "Resumen",
-    "Simulación",
+    { name: "Inicio", href: "/" }, // Página de inicio
+    { name: "Gastos", href: "/gastos" },
+    { name: "Ingreso", href: "/ingreso" },
+    { name: "Egreso", href: "/egreso" },
+    { name: "Resumen", href: "/resumen" },
+    { name: "Simulación", href: "/simulacion" }, // Asegúrate de tener estas páginas en `pages/`
   ];
 
   return (
     <header className="sticky top-0 z-50 shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-        <div className="text-xl font-bold text-[#FF004D]">GastosApp</div>
-
         {/* Desktop Nav */}
-        <nav className="hidden md:flex space-x-6 items-center">
+        <nav className="hidden md:flex justify-center items-center gap-x-6 w-full">
           {navItems.map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase().replace(/ /g, "")}`}
+            <Link
+              key={item.name}
+              href={item.href}
               className="text-gray-300 hover:text-[#FF004D] transition font-medium"
             >
-              {item}
-            </a>
+              {item.name}
+            </Link>
           ))}
           <button
-            className="bg-[#FF004D] ml-4 p-2 rounded-full text-gray-300 hover:text-yellow-400 transition"
+            className="bg-[#FF004D] p-2 rounded-full text-gray-300 hover:text-yellow-400 transition"
             onClick={toggleTheme}
             aria-label="Toggle Theme"
           >
@@ -79,14 +79,14 @@ export default function Header() {
       {isOpen && (
         <nav className="md:hidden bg-black px-4 pb-4 space-y-2">
           {navItems.map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase().replace(/ /g, "")}`}
+            <Link
+              key={item.name}
+              href={item.href}
               className="block text-gray-300 hover:text-[#FF004D]"
               onClick={toggleMenu}
             >
-              {item}
-            </a>
+              {item.name}
+            </Link>
           ))}
         </nav>
       )}
