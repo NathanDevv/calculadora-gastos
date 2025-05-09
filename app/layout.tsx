@@ -1,10 +1,12 @@
 // app/layout.tsx
 import "./globals.css";
 import { ExpenseProvider } from "@/context/ExpenseContext";
-import { metadata } from "@/app/metadata";
 import Header from "@/components/Header";
 
-export const metadataConfig = metadata;
+export const metadata = {
+  title: "Calculadora de Gastos",
+  description: "Proyecto escolar con React, Tailwind y aleatoriedad",
+};
 
 export default function RootLayout({
   children,
