@@ -34,11 +34,11 @@ export default function Header() {
 
   const navItems = [
     { name: "Inicio", href: "/" }, // Página de inicio
-    { name: "Gastos", href: "/gastos" },
-    { name: "Ingreso", href: "/ingreso" },
-    { name: "Egreso", href: "/egreso" },
-    { name: "Resumen", href: "/resumen" },
-    { name: "Simulación", href: "/simulacion" }, // Asegúrate de tener estas páginas en `pages/`
+    { name: "Gastos", href: "/Gastos" },
+    { name: "Ingreso", href: "/Ingreso" },
+    { name: "Egreso", href: "/Egreso" },
+    { name: "Resumen", href: "/Resumen" },
+    { name: "Simulación", href: "/Simulacion" }, // Asegúrate de tener estas páginas en `pages/`
   ];
 
   return (

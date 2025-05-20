@@ -2,11 +2,14 @@
 import { createContext, useState, useEffect } from "react";
 import { Expense } from "@/types/expense";
 import { loadExpenses, saveExpenses } from "@/utils/localStorage";
+import { filtrarPorTiempo, FiltroTiempo } from "@/utils/dateFilters";
 
 type Income = {
   source: string;
   amount: number;
   id: string;
+  date: string;
+  frequency: FiltroTiempo; // Reutilizo el tipo
 };
 
 type ExpenseContextType = {
@@ -19,6 +22,7 @@ type ExpenseContextType = {
   clearIncomes: () => void;
   clearAll: () => void;
   deleteExpense: (id: string) => void;
+  clearFilteredExpenses: (filtro: FiltroTiempo) => void;
 };
 
 export const ExpenseContext = createContext<ExpenseContextType>({
@@ -31,6 +35,7 @@ export const ExpenseContext = createContext<ExpenseContextType>({
   clearIncomes: () => {},
   clearAll: () => {},
   deleteExpense: () => {},
+  clearFilteredExpenses: () => {},
 });
 
 export const ExpenseProvider = ({
@@ -43,13 +48,9 @@ export const ExpenseProvider = ({
 
   useEffect(() => {
     const loadedExpenses = loadExpenses();
-    if (loadedExpenses) {
-      setExpenses(loadedExpenses);
-    }
+    if (loadedExpenses) setExpenses(loadedExpenses);
     const loadedIncomes = localStorage.getItem("incomes");
-    if (loadedIncomes) {
-      setIncomes(JSON.parse(loadedIncomes));
-    }
+    if (loadedIncomes) setIncomes(JSON.parse(loadedIncomes));
   }, []);
 
   useEffect(() => {
@@ -91,8 +92,15 @@ export const ExpenseProvider = ({
   };
 
   const deleteExpense = (id: string) => {
-    const filtered = expenses.filter((expense) => expense.id !== id);
-    setExpenses(filtered);
+    setExpenses((prev) => prev.filter((expense) => expense.id !== id));
+  };
+
+  const clearFilteredExpenses = (filtro: FiltroTiempo) => {
+    setExpenses((prev) =>
+      prev.filter(
+        (e) => !filtrarPorTiempo(new Date(e.date), filtro, e.frequency)
+      )
+    );
   };
 
   return (
@@ -107,6 +115,7 @@ export const ExpenseProvider = ({
         clearIncomes,
         clearAll,
         deleteExpense,
+        clearFilteredExpenses,
       }}
     >
       {children}

@@ -116,19 +116,22 @@ export default function ExpenseSummary() {
   };
 
   return (
-    <div className="text-right font-semibold text-black dark:text-white space-y-4">
+    <div
+      className="text-right font-semibold space-y-4"
+      style={{ color: "var(--text-color)" }}
+    >
+      {" "}
       <div>Total: ${total.toFixed(2)}</div>
-
       <div className="flex justify-end gap-2">
         <button
           onClick={exportToExcel}
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition cursor-pointer"
         >
           Exportar a Excel
         </button>
         <button
           onClick={exportToPDF}
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition cursor-pointer"
         >
           Exportar a PDF
         </button>

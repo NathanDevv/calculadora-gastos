@@ -5,15 +5,29 @@ import { ExpenseContext } from "@/context/ExpenseContext";
 
 export default function ExpenseForm() {
   const { addExpense } = useContext(ExpenseContext);
+
+  const [frequency, setFrequency] = useState<"diario" | "semanal" | "mensual">(
+    "diario"
+  );
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !amount) return;
-    addExpense({ name, amount: parseFloat(amount) });
+
+    const today = new Date().toISOString().split("T")[0]; // fecha actual en formato ISO simple
+
+    addExpense({
+      name,
+      amount: parseFloat(amount),
+      frequency,
+      date: today,
+    });
+
     setName("");
     setAmount("");
+    setFrequency("diario");
   };
 
   return (
@@ -39,6 +53,18 @@ export default function ExpenseForm() {
         value={amount}
         onChange={(e) => setAmount(e.target.value)}
       />
+
+      <select
+        value={frequency}
+        onChange={(e) =>
+          setFrequency(e.target.value as "diario" | "semanal" | "mensual")
+        }
+        className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-transparent text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF004D] transition"
+      >
+        <option value="diario">Diario</option>
+        <option value="semanal">Semanal</option>
+        <option value="mensual">Mensual</option>
+      </select>
 
       <button
         type="submit"

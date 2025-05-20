@@ -12,28 +12,29 @@
 
   /* Colores para modo claro */
   --background-light: #f4f4f4;
-  --foreground-light: #111111; /* Color de texto para modo claro */
+  --foreground-light: #111111;
   --accent-light: #d10040;
   --button-light: #d10040;
 
   /* Colores de texto en ambos modos */
-  --text-dark: #ededed; /* Texto en modo oscuro */
-  --text-light: #111111; /* Texto en modo claro */
-  --text-link-dark: #ff004d; /* Enlaces en modo oscuro */
-  --text-link-light: #d10040; /* Enlaces en modo claro */
+  --text-dark: #ededed;
+  --text-light: #111111;
+  --text-link-dark: #ff004d;
+  --text-link-light: #d10040;
 }
 
 /* Estilos generales del body */
 body {
   background-color: var(--background-dark);
   color: var(--foreground-dark);
+  --text-color: var(--text-dark);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Modo claro */
 body.light {
   background-color: var(--background-light);
   color: var(--foreground-light);
+  --text-color: var(--text-light);
 }
 
 /* Header */
@@ -73,50 +74,16 @@ h4,
 h5,
 h6,
 p {
+  color: var(--text-color);
   transition: color 0.3s ease;
 }
 
-body.light h1,
-body.light h2,
-body.light h3,
-body.light h4,
-body.light h5,
-body.light h6,
-body.light p {
-  color: var(--text-light); /* Colores del texto en modo claro */
-}
-
-body h1,
-body h2,
-body h3,
-body h4,
-body h5,
-body h6,
-body p {
-  color: var(--text-dark); /* Colores del texto en modo oscuro */
-}
-
-/* Estilos adicionales */
+/* Botones en modo claro */
 body.light button:hover {
   background-color: var(--button-light);
 }
 
-body h1,
-body h2,
-body h3,
-body h4,
-body h5,
-body h6,
-body p {
-  color: var(--text-dark); /* Color de texto en modo oscuro */
-}
-
-body.light h1,
-body.light h2,
-body.light h3,
-body.light h4,
-body.light h5,
-body.light h6,
-body.light p {
-  color: var(--text-light); /* Color de texto en modo claro */
+/* Botones en modo oscuro */
+button:hover {
+  background-color: var(--button-dark);
 }
