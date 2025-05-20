@@ -22,12 +22,12 @@ export default function ExpenseForm() {
       className="w-full max-w-md mx-auto p-6 rounded-xl shadow-lg bg-white dark:bg-transparent space-y-4"
     >
       <h2 className="text-2xl font-semibold text-[#FF004D] dark:text-white text-center">
-        Añadir nuevo gasto
+        Añadir nuevo egreso
       </h2>
 
       <input
         className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-transparent text-black dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF004D] transition"
-        placeholder="Nombre del gasto"
+        placeholder="Nombre del egreso"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
@@ -44,7 +44,7 @@ export default function ExpenseForm() {
         type="submit"
         className="w-full bg-[#FF004D] text-white py-2 px-4 rounded-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer transform hover:scale-[1.02]"
       >
-        Agregar Gasto
+        Agregar Egreso
       </button>
     </form>
   );

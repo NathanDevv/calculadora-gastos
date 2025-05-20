@@ -46,13 +46,13 @@ export default function RandomEntryGenerator() {
     <div className="mb-6 space-x-4">
       <button
         onClick={generateRandomExpense}
-        className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
+        className="px-4 py-2 bg-[#FF004D] text-white rounded hover:bg-red-700 font-semibold transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer transform hover:scale-[1.02]"
       >
-        Generar gasto aleatorio
+        Generar egreso aleatorio
       </button>
       <button
         onClick={generateRandomIncome}
-        className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
+        className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700  font-semibold transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer transform hover:scale-[1.02]"
       >
         Generar ingreso aleatorio
       </button>
