@@ -1,6 +1,6 @@
 "use client";
 import { createContext, useState, useEffect } from "react";
-import { Expense } from "@/types/expense"; // Si utilizas el mismo tipo para los ingresos, lo puedes dejar así
+import { Expense } from "@/types/expense";
 import { loadExpenses, saveExpenses } from "@/utils/localStorage";
 
 type Income = {
@@ -14,9 +14,11 @@ type ExpenseContextType = {
   incomes: Income[];
   addExpense: (e: Omit<Expense, "id">) => void;
   addIncome: (e: Omit<Income, "id">) => void;
-  addMultipleExpenses: (data: Expense[]) => void;
+  addMultipleExpenses: (data: Omit<Expense, "id">[]) => void;
   clearExpenses: () => void;
   clearIncomes: () => void;
+  clearAll: () => void;
+  deleteExpense: (id: string) => void;
 };
 
 export const ExpenseContext = createContext<ExpenseContextType>({
@@ -27,6 +29,8 @@ export const ExpenseContext = createContext<ExpenseContextType>({
   addMultipleExpenses: () => {},
   clearExpenses: () => {},
   clearIncomes: () => {},
+  clearAll: () => {},
+  deleteExpense: () => {},
 });
 
 export const ExpenseProvider = ({
@@ -38,11 +42,10 @@ export const ExpenseProvider = ({
   const [incomes, setIncomes] = useState<Income[]>([]);
 
   useEffect(() => {
-    const loadedExpenses = loadExpenses(); // cargar los gastos del localStorage
+    const loadedExpenses = loadExpenses();
     if (loadedExpenses) {
       setExpenses(loadedExpenses);
     }
-    // Puedes cargar ingresos desde localStorage si lo prefieres
     const loadedIncomes = localStorage.getItem("incomes");
     if (loadedIncomes) {
       setIncomes(JSON.parse(loadedIncomes));
@@ -50,8 +53,8 @@ export const ExpenseProvider = ({
   }, []);
 
   useEffect(() => {
-    saveExpenses(expenses); // guardar los gastos cuando cambian
-    localStorage.setItem("incomes", JSON.stringify(incomes)); // guardar los ingresos en localStorage
+    saveExpenses(expenses);
+    localStorage.setItem("incomes", JSON.stringify(incomes));
   }, [expenses, incomes]);
 
   const addExpense = (e: Omit<Expense, "id">) => {
@@ -64,18 +67,32 @@ export const ExpenseProvider = ({
     setIncomes((prev) => [...prev, newIncome]);
   };
 
-  const addMultipleExpenses = (data: Expense[]) => {
-    setExpenses((prev) => [...prev, ...data]);
+  const addMultipleExpenses = (data: Omit<Expense, "id">[]) => {
+    const expensesWithId = data.map((expense) => ({
+      ...expense,
+      id: crypto.randomUUID(),
+    }));
+    setExpenses((prev) => [...prev, ...expensesWithId]);
   };
 
   const clearExpenses = () => {
-    setExpenses([]); // Limpiar los gastos
-    saveExpenses([]); // Limpiar el localStorage
+    setExpenses([]);
+    saveExpenses([]);
   };
 
   const clearIncomes = () => {
-    setIncomes([]); // Limpiar los ingresos
-    localStorage.setItem("incomes", JSON.stringify([])); // Limpiar los ingresos en localStorage
+    setIncomes([]);
+    localStorage.setItem("incomes", JSON.stringify([]));
+  };
+
+  const clearAll = () => {
+    clearExpenses();
+    clearIncomes();
+  };
+
+  const deleteExpense = (id: string) => {
+    const filtered = expenses.filter((expense) => expense.id !== id);
+    setExpenses(filtered);
   };
 
   return (
@@ -88,6 +105,8 @@ export const ExpenseProvider = ({
         addMultipleExpenses,
         clearExpenses,
         clearIncomes,
+        clearAll,
+        deleteExpense,
       }}
     >
       {children}

@@ -3,22 +3,13 @@
 import ExpenseForm from "@/components/ExpenseForm";
 import IncomeForm from "@/components/IncomeForm";
 import ExpenseSummary from "@/components/ExpenseSummary";
-import ExpenseList from "@/components/ExpenseList"; // Importamos la lista de gastos e ingresos
+import ExpenseList from "@/components/ExpenseList";
+import RandomEntryGenerator from "@/components/RandomEntryGenerator";
 
 export default function Home() {
   return (
     <main className="text-gray-900 dark:text-white min-h-screen space-y-16">
-      {/* Sección de bienvenida */}
-      <section className="py-24 px-4 text-center bg-white dark:bg-transparent">
-        <h1 className="text-4xl font-bold mb-4 text-[#FF004D]">
-          Bienvenido a tu Calculadora de Gastos e Ingresos
-        </h1>
-        <p className="text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
-          Esta aplicación te permite registrar tus ingresos y egresos,
-          visualizar un resumen financiero y simular escenarios para mejorar tu
-          control financiero personal o familiar.
-        </p>
-      </section>
+      {/* ... sección bienvenida ... */}
 
       {/* Sección de ejemplo */}
       <section className="py-12 px-4 rounded-xl shadow-md max-w-3xl mx-auto bg-zinc-100 dark:bg-transparent">
@@ -36,7 +27,12 @@ export default function Home() {
         </p>
       </section>
 
-      {/* Sección de formularios */}
+      {/* Aquí está el botón abajo, fuera del contenedor */}
+      <div className="max-w-3xl mx-auto px-4 py-6 justify-center flex space-x-4">
+        <RandomEntryGenerator />
+      </div>
+
+      {/* ... resto de secciones (formularios, listas, resumen) ... */}
       <section
         id="gastos-ingresos"
         className="py-24 px-4 space-y-8 flex flex-col lg:flex-row lg:space-x-4"
@@ -49,20 +45,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Sección de resumen */}
-      <section className="py-12 px-4 rounded-xl shadow-md max-w-3xl mx-auto bg-zinc-100 dark:bg-transparent">
-        <h2 className="text-2xl font-semibold mb-4 text-[#FF004D]">
-          💰 Resumen Financiero
-        </h2>
-        <ExpenseSummary /> {/* Aquí se muestra el total */}
-      </section>
-
-      {/* Sección de lista de gastos e ingresos */}
       <section className="py-12 px-4 rounded-xl shadow-md max-w-3xl mx-auto bg-zinc-100 dark:bg-transparent">
         <h2 className="text-2xl font-semibold mb-4 text-[#FF004D]">
           📝 Historial de Ingresos y Egresos
         </h2>
-        <ExpenseList /> {/* Aquí se muestra la lista */}
+        <ExpenseList />
+      </section>
+
+      <section className="py-12 px-4 rounded-xl shadow-md max-w-3xl mx-auto bg-zinc-100 dark:bg-transparent">
+        <h2 className="text-2xl font-semibold mb-4 text-[#FF004D]">
+          💰 Resumen Financiero
+        </h2>
+        <ExpenseSummary />
       </section>
     </main>
   );
