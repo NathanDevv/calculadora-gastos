@@ -1,12 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 import ExpenseList from "@/components/ExpenseList";
+import { ExpenseContext } from "@/context/ExpenseContext";
+import { exportToExcel, exportToPDF } from "@/helpers/exportHelpers";
 
 export default function Gastos() {
   const [filtro, setFiltro] = useState<"diario" | "semanal" | "mensual">(
     "diario"
   );
+
+  const { expenses, incomes } = useContext(ExpenseContext);
 
   return (
     <div className="p-4">
@@ -46,8 +50,24 @@ export default function Gastos() {
         </button>
       </div>
 
+      {/* Botones de exportación */}
+
       {/* Lista de gastos filtrada */}
       <ExpenseList filtro={filtro} />
+      <div className="flex gap-2 mb-4 mt-5">
+        <button
+          onClick={() => exportToExcel(expenses, incomes)}
+          className="bg-blue-600 text-white px-4 py-2 rounded-md"
+        >
+          Exportar a Excel
+        </button>
+        <button
+          onClick={() => exportToPDF(expenses, incomes)}
+          className="bg-blue-600 text-white px-4 py-2 rounded-md"
+        >
+          Exportar a PDF
+        </button>
+      </div>
     </div>
   );
 }

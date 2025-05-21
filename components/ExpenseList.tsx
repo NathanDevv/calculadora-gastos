@@ -2,12 +2,6 @@
 import { useContext, useState } from "react";
 import { ExpenseContext } from "@/context/ExpenseContext";
 import { filtrarPorTiempo, FiltroTiempo } from "@/utils/dateFilters";
-import {
-  exportToExcel,
-  exportToPDF,
-  Expense,
-  Income,
-} from "@/helpers/exportHelpers";
 
 type Transaccion = {
   id: string;
@@ -50,33 +44,6 @@ export default function ExpenseList({ filtro }: Props) {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   // Botones para exportar
-  const handleExportExcel = () => {
-    const expensesToExport: Expense[] = egresosFiltrados.map((e) => ({
-      id: e.id,
-      name: e.name || "",
-      amount: e.amount,
-    }));
-    const incomesToExport: Income[] = ingresosFiltrados.map((i) => ({
-      id: i.id,
-      source: i.source || "",
-      amount: i.amount,
-    }));
-    exportToExcel(expensesToExport, incomesToExport);
-  };
-
-  const handleExportPDF = () => {
-    const expensesToExport: Expense[] = egresosFiltrados.map((e) => ({
-      id: e.id,
-      name: e.name || "",
-      amount: e.amount,
-    }));
-    const incomesToExport: Income[] = ingresosFiltrados.map((i) => ({
-      id: i.id,
-      source: i.source || "",
-      amount: i.amount,
-    }));
-    exportToPDF(expensesToExport, incomesToExport);
-  };
 
   // Limpieza
   const handleClearAll = () => {
@@ -269,12 +236,6 @@ export default function ExpenseList({ filtro }: Props) {
           Neto: ${totalNeto.toFixed(2)}
         </p>
       </div>
-      <button
-        onClick={() => setShowModal(true)}
-        className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-      >
-        Borrar todo
-      </button>
     </div>
   );
 }
