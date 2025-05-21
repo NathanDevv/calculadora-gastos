@@ -9,7 +9,7 @@ type Income = {
   amount: number;
   id: string;
   date: string;
-  frequency: FiltroTiempo; // Reutilizo el tipo
+  frequency: FiltroTiempo;
 };
 
 type ExpenseContextType = {
@@ -23,6 +23,7 @@ type ExpenseContextType = {
   clearAll: () => void;
   deleteExpense: (id: string) => void;
   clearFilteredExpenses: (filtro: FiltroTiempo) => void;
+  clearFilteredIncomes: (filtro: FiltroTiempo) => void;
 };
 
 export const ExpenseContext = createContext<ExpenseContextType>({
@@ -36,6 +37,7 @@ export const ExpenseContext = createContext<ExpenseContextType>({
   clearAll: () => {},
   deleteExpense: () => {},
   clearFilteredExpenses: () => {},
+  clearFilteredIncomes: () => {},
 });
 
 export const ExpenseProvider = ({
@@ -49,6 +51,7 @@ export const ExpenseProvider = ({
   useEffect(() => {
     const loadedExpenses = loadExpenses();
     if (loadedExpenses) setExpenses(loadedExpenses);
+
     const loadedIncomes = localStorage.getItem("incomes");
     if (loadedIncomes) setIncomes(JSON.parse(loadedIncomes));
   }, []);
@@ -92,15 +95,27 @@ export const ExpenseProvider = ({
   };
 
   const deleteExpense = (id: string) => {
-    setExpenses((prev) => prev.filter((expense) => expense.id !== id));
+    const updatedExpenses = expenses.filter((e) => e.id !== id);
+    setExpenses(updatedExpenses);
+    saveExpenses(updatedExpenses);
   };
 
   const clearFilteredExpenses = (filtro: FiltroTiempo) => {
-    setExpenses((prev) =>
-      prev.filter(
-        (e) => !filtrarPorTiempo(new Date(e.date), filtro, e.frequency)
-      )
-    );
+    const updated = expenses.filter((e) => {
+      const date = new Date(e.date);
+      return !filtrarPorTiempo(date, filtro, e.frequency);
+    });
+    setExpenses(updated);
+    saveExpenses(updated);
+  };
+
+  const clearFilteredIncomes = (filtro: FiltroTiempo) => {
+    const updated = incomes.filter((i) => {
+      const date = new Date(i.date);
+      return !filtrarPorTiempo(date, filtro, i.frequency);
+    });
+    setIncomes(updated);
+    localStorage.setItem("incomes", JSON.stringify(updated));
   };
 
   return (
@@ -116,6 +131,7 @@ export const ExpenseProvider = ({
         clearAll,
         deleteExpense,
         clearFilteredExpenses,
+        clearFilteredIncomes,
       }}
     >
       {children}
