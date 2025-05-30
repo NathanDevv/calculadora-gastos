@@ -1,6 +1,17 @@
 export type FiltroTiempo = "diario" | "semanal" | "mensual" | string;
 
 /**
+ * Limpia las horas de una fecha (deja solo año, mes, día a las 00:00:00.000)
+ * @param fecha - Fecha a limpiar
+ * @returns Fecha sin hora
+ */
+const limpiarHoras = (fecha: Date): Date => {
+  const nuevaFecha = new Date(fecha);
+  nuevaFecha.setHours(0, 0, 0, 0);
+  return nuevaFecha;
+};
+
+/**
  * Esta función filtra una fecha según el tipo de filtro de tiempo y la frecuencia del evento.
  * @param fecha - La fecha del evento o actividad.
  * @param filtro - El filtro que el usuario eligió (diario, semanal, mensual).
@@ -12,39 +23,41 @@ export const filtrarPorTiempo = (
   filtro: FiltroTiempo,
   frecuencia: FiltroTiempo
 ): boolean => {
-  const today = new Date(); // Fecha actual
+  const today = new Date();
+
+  if (!(fecha instanceof Date) || isNaN(fecha.getTime())) {
+    console.warn("Fecha inválida recibida:", fecha);
+    return false;
+  }
+
+  const filtrosValidos = ["diario", "semanal", "mensual"];
+  if (!filtrosValidos.includes(filtro)) {
+    console.warn(`Filtro no válido: ${filtro}. Mostrando todo por defecto.`);
+    return true;
+  }
 
   // ✅ FILTRO DIARIO
   if (filtro === "diario") {
-    if (frecuencia !== "diario") return false; // Si no coincide la frecuencia, no lo mostramos
-
-    // Comparamos solo el día, mes y año
-    const fechaStr = fecha.toISOString().split("T")[0];
-    const todayStr = today.toISOString().split("T")[0];
-    return fechaStr === todayStr;
+    if (frecuencia !== "diario") return false;
+    return limpiarHoras(fecha).getTime() === limpiarHoras(today).getTime();
   }
 
   // ✅ FILTRO SEMANAL
   if (filtro === "semanal") {
     if (frecuencia !== "semanal") return false;
 
-    // Calculamos el primer día de esta semana (domingo)
-    const primerDiaSemana = new Date(today);
-    primerDiaSemana.setDate(today.getDate() - today.getDay());
-    primerDiaSemana.setHours(0, 0, 0, 0);
+    const inicioSemana = limpiarHoras(new Date(today));
+    inicioSemana.setDate(today.getDate() - today.getDay());
 
-    // Calculamos el último día de esta semana (sábado)
-    const ultimoDiaSemana = new Date(primerDiaSemana);
-    ultimoDiaSemana.setDate(primerDiaSemana.getDate() + 6);
-    ultimoDiaSemana.setHours(23, 59, 59, 999);
+    const finSemana = new Date(inicioSemana);
+    finSemana.setDate(inicioSemana.getDate() + 6);
+    finSemana.setHours(23, 59, 59, 999);
 
-    // Comprobamos si la fecha cae dentro de esta semana
-    return fecha >= primerDiaSemana && fecha <= ultimoDiaSemana;
+    return fecha >= inicioSemana && fecha <= finSemana;
   }
 
   // ✅ FILTRO MENSUAL
   if (filtro === "mensual") {
-    // Solo si también es un evento de frecuencia mensual
     return (
       frecuencia === "mensual" &&
       fecha.getMonth() === today.getMonth() &&

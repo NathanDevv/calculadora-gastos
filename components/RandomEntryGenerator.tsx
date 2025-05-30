@@ -15,12 +15,18 @@ const randomNames = [
   "Freelance",
 ];
 
+const frequencies = ["diario", "semanal", "mensual"];
+
 function getRandomAmount(min: number, max: number) {
   return parseFloat((Math.random() * (max - min) + min).toFixed(2));
 }
 
 function getRandomName() {
   return randomNames[Math.floor(Math.random() * randomNames.length)];
+}
+
+function getRandomFrequency() {
+  return frequencies[Math.floor(Math.random() * frequencies.length)];
 }
 
 export default function RandomEntryGenerator() {
@@ -30,6 +36,8 @@ export default function RandomEntryGenerator() {
     const expense = {
       name: getRandomName(),
       amount: getRandomAmount(10, 500),
+      frequency: getRandomFrequency(),
+      date: new Date().toISOString(),
     };
     addExpense(expense);
   };
@@ -38,6 +46,8 @@ export default function RandomEntryGenerator() {
     const income = {
       source: getRandomName(),
       amount: getRandomAmount(50, 1000),
+      frequency: getRandomFrequency(),
+      date: new Date().toISOString(),
     };
     addIncome(income);
   };
@@ -48,11 +58,11 @@ export default function RandomEntryGenerator() {
         onClick={generateRandomExpense}
         className="px-4 py-2 bg-[#FF004D] text-white rounded hover:bg-red-700 font-semibold transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer transform hover:scale-[1.02]"
       >
-        Generar egreso aleatorio
+        Generar Egreso aleatorio
       </button>
       <button
         onClick={generateRandomIncome}
-        className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700  font-semibold transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer transform hover:scale-[1.02]"
+        className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 font-semibold transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer transform hover:scale-[1.02]"
       >
         Generar ingreso aleatorio
       </button>

@@ -73,11 +73,11 @@ export default function ExpenseSummary() {
       headStyles: { fillColor: [0, 123, 255] },
     });
 
-    // 🟡 Crear un canvas dinámico para la gráfica
+    //  Canvas para la Grafica
     const canvas = document.createElement("canvas");
     canvas.width = 400;
     canvas.height = 400;
-    document.body.appendChild(canvas); // Necesario para que pinte bien
+    document.body.appendChild(canvas);
 
     // Usamos una promesa para esperar que el gráfico se renderice correctamente
     await new Promise<void>((resolve) => {
@@ -94,17 +94,17 @@ export default function ExpenseSummary() {
         },
         options: {
           animation: {
-            onComplete: () => resolve(), // Resolvemos la promesa solo cuando la animación termina
+            onComplete: () => resolve(),
           },
           responsive: false,
         },
       });
     });
 
-    // 🔁 Convertir canvas a imagen
+    // Convertir elcanvas a imagen
     const chartImage = canvas.toDataURL("image/png");
 
-    // 🧹 Limpiar el DOM
+    // Limpieza de DOM
     document.body.removeChild(canvas);
 
     doc.addPage();

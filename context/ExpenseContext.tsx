@@ -22,6 +22,7 @@ type ExpenseContextType = {
   clearIncomes: () => void;
   clearAll: () => void;
   deleteExpense: (id: string) => void;
+  deleteIncome: (id: string) => void;
   clearFilteredExpenses: (filtro: FiltroTiempo) => void;
   clearFilteredIncomes: (filtro: FiltroTiempo) => void;
 };
@@ -36,6 +37,7 @@ export const ExpenseContext = createContext<ExpenseContextType>({
   clearIncomes: () => {},
   clearAll: () => {},
   deleteExpense: () => {},
+  deleteIncome: () => {},
   clearFilteredExpenses: () => {},
   clearFilteredIncomes: () => {},
 });
@@ -100,6 +102,12 @@ export const ExpenseProvider = ({
     saveExpenses(updatedExpenses);
   };
 
+  const deleteIncome = (id: string) => {
+    const updatedIncomes = incomes.filter((i) => i.id !== id);
+    setIncomes(updatedIncomes);
+    localStorage.setItem("incomes", JSON.stringify(updatedIncomes));
+  };
+
   const clearFilteredExpenses = (filtro: FiltroTiempo) => {
     const updated = expenses.filter((e) => {
       const date = new Date(e.date);
@@ -130,6 +138,7 @@ export const ExpenseProvider = ({
         clearIncomes,
         clearAll,
         deleteExpense,
+        deleteIncome,
         clearFilteredExpenses,
         clearFilteredIncomes,
       }}
