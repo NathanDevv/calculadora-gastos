@@ -27,7 +27,7 @@ export default function IngresosPage() {
           {incomes.map((income) => (
             <div
               key={income.id}
-              className="p-4 border border-gray-300 dark:border-gray-700 rounded-lg shadow-md bg-white dark:bg-gray-800 flex justify-between items-center"
+              className="p-4 border border-gray-300 dark:border-gray-700 rounded-lg shadow-md bg-white dark:bg-transparent flex justify-between items-center"
             >
               <div>
                 <p className="text-lg font-semibold text-black dark:text-white">

@@ -44,7 +44,7 @@ export default function Home() {
         <h2 className="text-2xl font-semibold mb-4 text-[#FF004D]">
           📝 Historial de Ingresos y Egresos
         </h2>
-        <ExpenseList />
+        <ExpenseList filtro="todos" />
       </section>
 
       <section className="py-12 px-4 rounded-xl shadow-md max-w-3xl mx-auto bg-zinc-100 dark:bg-transparent">

@@ -1,16 +1,8 @@
 "use client";
 import { createContext, useState, useEffect } from "react";
-import { Expense } from "@/types/expense";
+import { Expense, Income } from "@/types/expense";
 import { loadExpenses, saveExpenses } from "@/utils/localStorage";
 import { filtrarPorTiempo, FiltroTiempo } from "@/utils/dateFilters";
-
-type Income = {
-  source: string;
-  amount: number;
-  id: string;
-  date: string;
-  frequency: FiltroTiempo;
-};
 
 type ExpenseContextType = {
   expenses: Expense[];

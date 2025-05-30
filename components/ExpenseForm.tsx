@@ -16,7 +16,7 @@ export default function ExpenseForm() {
     e.preventDefault();
     if (!name || !amount) return;
 
-    const today = new Date().toISOString().split("T")[0]; // fecha actual en formato ISO simple
+    const today = new Date().toISOString().split("T")[0];
 
     addExpense({
       name,
@@ -40,7 +40,7 @@ export default function ExpenseForm() {
       </h2>
 
       <input
-        className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-transparent text-black dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF004D] transition"
+        className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-transparent text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF004D] transition"
         placeholder="Nombre del egreso"
         value={name}
         onChange={(e) => setName(e.target.value)}
@@ -48,7 +48,7 @@ export default function ExpenseForm() {
 
       <input
         type="number"
-        className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-transparent text-black dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF004D] transition"
+        className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-transparent text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF004D] transition"
         placeholder="Monto"
         value={amount}
         onChange={(e) => setAmount(e.target.value)}
