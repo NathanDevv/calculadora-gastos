@@ -122,13 +122,13 @@ export default function SimulacionFinanciera() {
       {data.length > 0 && (
         <>
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
-            <div className="p-4 bg-green-100 rounded-md shadow-inner">
+            <div className="p-4 bg-transparent rounded-md shadow-lg">
               <p className="text-lg font-medium text-green-700">
                 Ingresos Totales
               </p>
               <p className="text-2xl font-bold">${totalIncome.toFixed(2)}</p>
             </div>
-            <div className="p-4 bg-red-100 rounded-md shadow-inner">
+            <div className="p-4 bg-transparent rounded-md shadow-lg">
               <p className="text-lg font-medium text-red-700">
                 Egresos Totales
               </p>
@@ -137,11 +137,11 @@ export default function SimulacionFinanciera() {
             <div
               className={`p-4 rounded-md shadow-inner ${
                 finalBalance >= 0
-                  ? "bg-blue-100 text-blue-800"
-                  : "bg-red-200 text-red-900"
+                  ? "p-4 bg-transparent rounded-md shadow-lg"
+                  : "p-4 bg-transparent rounded-md shadow-lg"
               }`}
             >
-              <p className="text-lg font-medium">Balance Final</p>
+              <p className="text-lg font-medium ">Balance Final</p>
               <p className="text-2xl font-bold">${finalBalance.toFixed(2)}</p>
               <p className="text-sm italic">
                 Promedio diario: ${avgBalance.toFixed(2)}
